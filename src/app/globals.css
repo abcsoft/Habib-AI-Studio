@@ -52,6 +52,13 @@
   --color-pop-sky: var(--pop-sky);
   --color-pop-pink: var(--pop-pink);
   --color-pop-orange: var(--pop-orange);
+  /* Dark Mode v2: BOLD role — theme-invariant bright fills. */
+  --color-pop-yellow-bold: var(--pop-yellow-bold);
+  --color-pop-mint-bold: var(--pop-mint-bold);
+  --color-pop-sky-bold: var(--pop-sky-bold);
+  --color-pop-pink-bold: var(--pop-pink-bold);
+  --color-pop-orange-bold: var(--pop-orange-bold);
+  --color-ink-deep: var(--ink-deep);
   --color-credit: var(--credit);
   --color-credit-text: var(--credit-text);
   --color-highlight: var(--pop-yellow);
@@ -79,6 +86,9 @@
 :root {
   color-scheme: light;
   --ink: oklch(0.2 0.02 90);
+  /* Dark Mode v2: fixed text/border token for BOLD pop fills, BOTH
+     themes. Defined once, never redefined in .dark. */
+  --ink-deep: oklch(0.18 0.02 90);
   /* Warm cream ≈ #FFFDF5 (DESIGN.md v3.1). */
   --canvas: oklch(0.993 0.011 95);
   --pop-yellow: oklch(0.88 0.16 95);
@@ -86,6 +96,13 @@
   --pop-sky: oklch(0.86 0.09 230);
   --pop-pink: oklch(0.86 0.1 350);
   --pop-orange: oklch(0.82 0.13 60);
+  /* BOLD role: in light mode these alias the pops exactly, so light is
+     bit-for-bit unchanged; .dark gives them their own bright values. */
+  --pop-yellow-bold: var(--pop-yellow);
+  --pop-mint-bold: var(--pop-mint);
+  --pop-sky-bold: var(--pop-sky);
+  --pop-pink-bold: var(--pop-pink);
+  --pop-orange-bold: var(--pop-orange);
   --credit: oklch(0.75 0.18 150);
   --debit: oklch(0.62 0.23 27);
   --radius: 12px;
@@ -98,20 +115,37 @@
   --on-ink-muted: color-mix(in oklch, var(--canvas), var(--ink) 22%);
 }
 
+/* ── Dark Mode v2: "the same poster at night" ──────────────────────────
+   Saturation survives; large luminous areas do not. Every pop has TWO
+   roles: SURFACE (deep tinted charcoal here, bright in light) for big
+   fills, and BOLD (bright in both themes, always with --ink-deep text)
+   for buttons/chips/stickers/highlights. Shadows keep var(--ink) —
+   cream hard shadows are the night signature. */
 .dark {
   color-scheme: dark;
-  --canvas: oklch(0.19 0.02 90);
-  --ink: oklch(0.95 0.01 90);
-  --pop-yellow: oklch(0.32 0.07 95);
-  --pop-mint: oklch(0.32 0.06 150);
-  --pop-sky: oklch(0.32 0.05 230);
-  --pop-pink: oklch(0.32 0.05 350);
-  --pop-orange: oklch(0.32 0.06 60);
-  --credit: oklch(0.75 0.18 150);
-  --debit: oklch(0.7 0.2 27);
+  /* Deep warm espresso-charcoal — never blue-gray, never pure black. */
+  --canvas: oklch(0.16 0.015 80);
+  /* Warm cream, not white — no glare. */
+  --ink: oklch(0.955 0.012 95);
+  /* BOLD pops: bright, slightly deepened vs light mode to cut glare. */
+  --pop-yellow-bold: oklch(0.86 0.17 95);
+  --pop-mint-bold: oklch(0.85 0.14 150);
+  --pop-sky-bold: oklch(0.82 0.11 230);
+  --pop-pink-bold: oklch(0.81 0.12 350);
+  --pop-orange-bold: oklch(0.8 0.14 60);
+  /* SURFACE pops: tinted charcoal. Percentages tuned per hue — sky and
+     pink take more (deep navy / deep berry); yellow takes the least
+     (dark yellow turns olive — bright yellow ACCENTS carry that
+     section's identity instead). */
+  --pop-yellow: color-mix(in oklch, var(--canvas), var(--pop-yellow-bold) 8%);
+  --pop-mint: color-mix(in oklch, var(--canvas), var(--pop-mint-bold) 14%);
+  --pop-sky: color-mix(in oklch, var(--canvas), var(--pop-sky-bold) 16%);
+  --pop-pink: color-mix(in oklch, var(--canvas), var(--pop-pink-bold) 16%);
+  --pop-orange: color-mix(in oklch, var(--canvas), var(--pop-orange-bold) 12%);
+  --credit: oklch(0.78 0.16 150);
+  --debit: oklch(0.72 0.19 27);
   --credit-text: var(--credit);
   --debit-text: var(--debit);
-  /* …and 30% in dark (35% dips to 4.36 on dark panels). */
   --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 30%);
   --on-ink-muted: color-mix(in oklch, var(--canvas), var(--ink) 22%);
 }
@@ -129,11 +163,12 @@
   --shadow-hard-md: 5px 5px 0 0 var(--ink);
   --shadow-hard-lg: 8px 8px 0 0 var(--ink);
   --shadow-hover: 7px 7px 0 0 var(--ink);
-  /* Section-title offset shadow: pop-yellow on canvas sections and the
-     ink band; pop panels override to var(--canvas). */
-  --title-shadow: var(--pop-yellow);
-  --action: var(--pop-yellow);
-  --on-accent: var(--ink);
+  /* Section-title offset shadow: BOLD yellow on canvas sections and the
+     closing band; pop panels override per section. */
+  --title-shadow: var(--pop-yellow-bold);
+  /* BOLD role: primary actions stay electric in both themes. */
+  --action: var(--pop-yellow-bold);
+  --on-accent: var(--ink-deep);
   --paper-2: color-mix(in oklch, var(--canvas), var(--ink) 5%);
   --debit-deep: color-mix(in oklch, var(--debit), var(--ink) 30%);
   /* Legacy aliases — widths come from border-2 classes. */
@@ -148,9 +183,10 @@
   --card-foreground: var(--ink);
   --popover: var(--canvas);
   --popover-foreground: var(--ink);
-  /* Primary buttons are ACTION yellow with ink text (RetroUI style). */
+  /* Primary buttons are ACTION yellow. Text is the FIXED dark token —
+     theme-safe pairing on a bold fill (Dark Mode v2). */
   --primary: var(--action);
-  --primary-foreground: var(--ink);
+  --primary-foreground: var(--ink-deep);
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
@@ -165,19 +201,38 @@
   --border: var(--ink);
   --input: var(--ink);
   --ring: var(--ink);
-  --chart-1: var(--credit);
-  --chart-2: var(--pop-sky);
-  --chart-3: var(--pop-pink);
-  --chart-4: var(--pop-orange);
-  --chart-5: var(--debit);
+  /* Charts are data accents — the five BOLD pops (Dark Mode v2). */
+  --chart-1: var(--pop-yellow-bold);
+  --chart-2: var(--pop-mint-bold);
+  --chart-3: var(--pop-sky-bold);
+  --chart-4: var(--pop-pink-bold);
+  --chart-5: var(--pop-orange-bold);
   --sidebar: var(--paper-2);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--action);
-  --sidebar-primary-foreground: var(--ink);
+  --sidebar-primary-foreground: var(--ink-deep);
   --sidebar-accent: color-mix(in oklch, var(--ink), transparent 90%);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--ink);
   --sidebar-ring: var(--ink);
+  /* The big ink blocks (closing band, footer): ink in light mode. */
+  --band-bg: var(--foreground);
+  --band-fg: var(--background);
+  --band-muted: var(--on-ink-muted);
+}
+
+/* Dark Mode v2 overrides — AFTER the derived block so they win. */
+.dark {
+  /* Cards: one clear step above canvas (replaces the 5% mix). */
+  --paper-2: oklch(0.215 0.018 80);
+  /* Focus goes bold at night. */
+  --ring: var(--pop-yellow-bold);
+  --sidebar-ring: var(--pop-yellow-bold);
+  /* A full-width cream band is glare — the big ink blocks become
+     elevated dark panels with cream text instead. */
+  --band-bg: var(--paper-2);
+  --band-fg: var(--ink);
+  --band-muted: var(--muted-ink);
 }
 
 /* v4 register scoping: inside the marketing shell (<main class="loud">)
@@ -204,8 +259,8 @@
   /* v3.1 premium detail: selection carries the brand. Dark mode swaps in
      the muted yellow with light ink — 11.0:1 either way. */
   ::selection {
-    background-color: var(--pop-yellow);
-    color: var(--ink);
+    background-color: var(--pop-yellow-bold);
+    color: var(--ink-deep);
   }
   /* v4.6 cursor rule, set at the primitive level: every enabled
      interactive element is a pointer; disabled controls are not. */
@@ -268,12 +323,17 @@
     isolation: isolate;
     white-space: nowrap;
   }
+  .marker {
+    /* Text pairs with the highlight color: fixed dark on bold pops;
+       sections using a canvas swoosh set --marker-ink to var(--ink). */
+    color: var(--marker-ink, var(--ink-deep));
+  }
   .marker::before {
     content: "";
     position: absolute;
     inset: 10% -0.18em;
     z-index: -1;
-    background: var(--marker-color, var(--pop-yellow));
+    background: var(--marker-color, var(--pop-yellow-bold));
     border-radius: 0.4em;
     transform: skewX(-8deg);
   }
@@ -356,9 +416,10 @@
   }
   .chip:hover {
     /* Per-surface override: on the yellow hero, yellow-on-yellow is
-       invisible — set --chip-hover (e.g. pop-sky) on the section. */
-    background: var(--chip-hover, var(--pop-yellow));
-    color: var(--ink);
+       invisible — set --chip-hover (e.g. pop-sky-bold) on the section.
+       Bold fill + fixed dark text = theme-safe (Dark Mode v2). */
+    background: var(--chip-hover, var(--pop-yellow-bold));
+    color: var(--ink-deep);
     translate: -1px -1px;
     box-shadow: var(--shadow-hard-sm);
   }
@@ -380,13 +441,13 @@
      --background against the bg-foreground footer. */
   .footer-chip {
     display: inline-block;
-    border: 2px solid var(--background);
+    border: 2px solid var(--band-fg);
     border-radius: 10px;
     padding: 0.65rem 1rem;
     font-family: var(--font-mono);
     font-size: 17px;
     line-height: 1;
-    color: var(--background);
+    color: var(--band-fg);
     transition:
       translate 120ms ease,
       box-shadow 120ms ease,
@@ -394,15 +455,15 @@
       color 120ms ease;
   }
   .footer-chip:hover {
-    background: var(--pop-yellow);
-    border-color: var(--ink);
-    color: var(--ink);
+    background: var(--pop-yellow-bold);
+    border-color: var(--ink-deep);
+    color: var(--ink-deep);
     translate: -1px -1px;
-    box-shadow: 3px 3px 0 0 var(--background);
+    box-shadow: 3px 3px 0 0 var(--band-fg);
   }
   .footer-chip:active {
     translate: 1px 1px;
-    box-shadow: 0 0 0 0 var(--background);
+    box-shadow: 0 0 0 0 var(--band-fg);
   }
 
   /* Marker that draws in on hover — author links, footer credit. Set
@@ -412,12 +473,15 @@
     isolation: isolate;
     white-space: nowrap;
   }
+  .marker-hover:hover {
+    color: var(--marker-ink, var(--ink-deep));
+  }
   .marker-hover::before {
     content: "";
     position: absolute;
     inset: 10% -0.18em;
     z-index: -1;
-    background: var(--marker-color, var(--pop-yellow));
+    background: var(--marker-color, var(--pop-yellow-bold));
     border-radius: 0.4em;
     transform: skewX(-8deg) scaleX(0);
     transform-origin: left center;
@@ -469,8 +533,8 @@
     background-color 120ms ease,
     color 120ms ease;
   &:hover {
-    background-color: var(--pop-yellow);
-    color: var(--ink);
+    background-color: var(--pop-yellow-bold);
+    color: var(--ink-deep);
   }
 }
 
@@ -573,6 +637,10 @@
   .sparkle-spin {
     animation: sparkle-spin 0.9s linear infinite;
   }
+}
+
+.dark .illo {
+  filter: drop-shadow(3px 3px 0 var(--ink));
 }
 
 /* Toast entry: released from the pressed position (see .cn-toast). */

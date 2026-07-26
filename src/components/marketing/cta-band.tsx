@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 // ink is invisible; documented in DESIGN.md hard rule 3).
 export function CtaBand() {
   return (
-    <div className="border-t-[3px] bg-foreground text-background [--muted-ink:var(--on-ink-muted)] [--title-shadow:var(--pop-yellow)]">
+    <div className="border-t-[3px] bg-(--band-bg) text-(--band-fg) [--muted-ink:var(--band-muted)] [--title-shadow:var(--pop-yellow-bold)]">
       <div className="mx-auto flex w-full max-w-[1160px] flex-wrap items-center justify-between gap-10 px-6 py-20">
         <div>
           <p className="eyebrow">Closing entry</p>
@@ -16,7 +16,7 @@ export function CtaBand() {
         <div className="flex flex-wrap items-center gap-6">
           <Link
             href="/signup"
-            className="border-emph inline-flex items-center rounded-md border-background bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-[translate] [box-shadow:6px_6px_0_0_var(--background)] hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="border-emph inline-flex items-center rounded-md border-(--band-fg) bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-[translate] [box-shadow:6px_6px_0_0_var(--band-fg)] hover:-translate-x-0.5 hover:-translate-y-0.5"
           >
             Start free
           </Link>

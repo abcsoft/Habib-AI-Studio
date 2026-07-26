@@ -60,7 +60,7 @@ function PlanCard({
         <h3 className="font-heading text-2xl font-extrabold">{plan.name}</h3>
         {plan.id === "pro" ? (
           // Calm-register version of the landing sticker: no rotation.
-          <span className="rounded-full border-2 bg-pop-pink px-2.5 py-0.5 font-mono text-[10px] font-medium tracking-widest uppercase shadow-hard-sm">
+          <span className="rounded-full border-2 bg-pop-pink-bold px-2.5 py-0.5 font-mono text-[10px] font-medium tracking-widest text-ink-deep uppercase shadow-hard-sm">
             Most popular
           </span>
         ) : null}

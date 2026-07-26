@@ -71,7 +71,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="scroll-mt-16 border-t-[3px] bg-pop-pink [--title-shadow:var(--canvas)]"
+      className="scroll-mt-16 border-t-[3px] bg-pop-pink [--title-shadow:var(--canvas)] dark:[--title-shadow:var(--pop-pink-bold)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
         <div className="pop-in mb-11">
@@ -90,7 +90,7 @@ export function Faq() {
                 <span className="flex-1 font-heading text-2xl font-bold">
                   {faq.q}
                 </span>
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-2 bg-background shadow-hard-sm transition-colors group-open:bg-pop-yellow">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-[8px] border-2 bg-background shadow-hard-sm transition-colors group-open:bg-pop-yellow-bold group-open:text-ink-deep">
                   <ChevronRightIcon
                     aria-hidden
                     className="size-4 transition-transform duration-200 group-open:rotate-90"

@@ -34,7 +34,7 @@ const columns = [
 
 export function MarketingFooter() {
   return (
-    <footer className="bg-foreground text-background [--muted-ink:var(--on-ink-muted)] [--title-shadow:var(--pop-yellow)]">
+    <footer className="bg-(--band-bg) text-(--band-fg) [--muted-ink:var(--band-muted)] [--title-shadow:var(--pop-yellow-bold)]">
       <div className="mx-auto w-full max-w-[1160px] px-6 pt-16 pb-10">
         <div className="flex flex-wrap items-start justify-between gap-x-16 gap-y-12">
           <div className="max-w-full">
@@ -49,7 +49,7 @@ export function MarketingFooter() {
                 href="https://nikandr.com"
                 target="_blank"
                 rel="noreferrer"
-                className="marker-hover underline underline-offset-4 hover:text-foreground"
+                className="marker-hover underline underline-offset-4"
               >
                 Nikandr Surkov
               </a>
@@ -94,7 +94,7 @@ export function MarketingFooter() {
             alt="Gold coin mascot with sunglasses pushed up, waving goodbye"
             width={72}
             height={72}
-            className="size-18"
+            className="illo size-18"
           />
         </div>
       </div>

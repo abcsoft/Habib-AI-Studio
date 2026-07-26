@@ -13,7 +13,7 @@ const cards = [
     alt: "Smiling padlock character holding a golden key",
     title: "Auth that owns data",
     line: "Email, Google, GitHub, magic links — sessions in your Postgres.",
-    shadow: "var(--pop-yellow)",
+    shadow: "var(--pop-yellow-bold)",
   },
   {
     index: "02",
@@ -21,7 +21,7 @@ const cards = [
     alt: "Mail envelope inside a bold looping retry arrow",
     title: "Webhooks survive retries",
     line: "Raw-body signatures, one sync writer, idempotency keys everywhere.",
-    shadow: "var(--pop-sky)",
+    shadow: "var(--pop-sky-bold)",
   },
   {
     index: "03",
@@ -29,7 +29,7 @@ const cards = [
     alt: "Open accounting ledger with stacked gold coins and a mint check mark",
     title: "An honest credits ledger",
     line: "Atomic spends, automatic refunds. Balance is a SUM, not a hope.",
-    shadow: "var(--pop-pink)",
+    shadow: "var(--pop-pink-bold)",
   },
   {
     index: "04",
@@ -37,7 +37,7 @@ const cards = [
     alt: "Polaroid photo with a sunset landscape popping out of the frame",
     title: "AI images, wired",
     line: "Prompt → spend → image → history. Swap models with one env string.",
-    shadow: "var(--pop-mint)",
+    shadow: "var(--pop-mint-bold)",
   },
   {
     index: "05",
@@ -45,7 +45,7 @@ const cards = [
     alt: "Friendly robot head beside a clipboard with checkmarks",
     title: "Built for AI agents",
     line: "AGENTS.md, scoped rules, skills, hooks that block broken code.",
-    shadow: "var(--pop-orange)",
+    shadow: "var(--pop-orange-bold)",
   },
   {
     index: "06",
@@ -53,7 +53,7 @@ const cards = [
     alt: "Clipboard with checkmarks next to a small gold trophy",
     title: "Proven by 106 tests",
     line: "Vitest and Playwright against real Postgres, on every push.",
-    shadow: "var(--pop-yellow)",
+    shadow: "var(--pop-yellow-bold)",
   },
 ] as const;
 
@@ -61,7 +61,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="scroll-mt-16 border-t-[3px] bg-pop-mint [--title-shadow:var(--canvas)]"
+      className="scroll-mt-16 border-t-[3px] bg-pop-mint [--title-shadow:var(--canvas)] dark:[--title-shadow:var(--pop-mint-bold)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
         <div className="pop-in mb-12">
@@ -88,7 +88,7 @@ export function Features() {
                 alt={card.alt}
                 width={440}
                 height={440}
-                className="mx-auto h-auto w-full max-w-[200px]"
+                className="illo mx-auto h-auto w-full max-w-[200px]"
               />
               <span className="chip-mono mt-3">{card.index}</span>
               <h3

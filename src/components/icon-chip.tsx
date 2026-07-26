@@ -2,13 +2,15 @@ import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+// Colored plates are BOLD role (Dark Mode v2): bright in both themes,
+// icon strokes in the fixed dark token. Cream stays neutral/inherit.
 const colors = {
   cream: "bg-background",
-  yellow: "bg-pop-yellow",
-  mint: "bg-pop-mint",
-  sky: "bg-pop-sky",
-  pink: "bg-pop-pink",
-  orange: "bg-pop-orange",
+  yellow: "bg-pop-yellow-bold text-ink-deep",
+  mint: "bg-pop-mint-bold text-ink-deep",
+  sky: "bg-pop-sky-bold text-ink-deep",
+  pink: "bg-pop-pink-bold text-ink-deep",
+  orange: "bg-pop-orange-bold text-ink-deep",
 } as const;
 
 // v4.3 icon chip — the standard marketing list marker (DESIGN.md):

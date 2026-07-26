@@ -63,14 +63,21 @@ export const metadata: Metadata = {
 const swatches = [
   { name: "canvas", className: "bg-background" },
   { name: "ink", className: "bg-foreground" },
-  { name: "pop-yellow (action)", className: "bg-pop-yellow" },
-  { name: "pop-mint", className: "bg-pop-mint" },
-  { name: "pop-sky", className: "bg-pop-sky" },
-  { name: "pop-pink", className: "bg-pop-pink" },
-  { name: "pop-orange", className: "bg-pop-orange" },
+  { name: "paper-2", className: "bg-paper-2" },
   { name: "credit", className: "bg-credit" },
   { name: "credit-text", className: "bg-credit-text" },
   { name: "debit", className: "bg-debit-text" },
+] as const;
+
+// Dark Mode v2: every pop has a SURFACE role (theme-aware — deep tinted
+// charcoal at night) and a BOLD role (bright in both themes, always
+// paired with ink-deep text).
+const popRoles = [
+  { name: "yellow", surface: "bg-pop-yellow", bold: "bg-pop-yellow-bold" },
+  { name: "mint", surface: "bg-pop-mint", bold: "bg-pop-mint-bold" },
+  { name: "sky", surface: "bg-pop-sky", bold: "bg-pop-sky-bold" },
+  { name: "pink", surface: "bg-pop-pink", bold: "bg-pop-pink-bold" },
+  { name: "orange", surface: "bg-pop-orange", bold: "bg-pop-orange-bold" },
 ] as const;
 
 const ledgerEntries = [
@@ -174,6 +181,30 @@ export default async function StyleguidePage({
                 </div>
               ))}
             </div>
+          </Section>
+
+          <Section title="Pop roles — surface vs bold (Dark Mode v2)">
+            <div className="space-y-3">
+              {popRoles.map((pop) => (
+                <div key={pop.name} className="flex items-center gap-4">
+                  <span className="w-16 font-mono text-xs text-muted-foreground">
+                    {pop.name}
+                  </span>
+                  <div
+                    className={`h-14 flex-1 rounded-lg border-2 ${pop.surface}`}
+                  />
+                  <div
+                    className={`flex h-14 flex-1 items-center justify-center rounded-lg border-2 font-mono text-xs text-ink-deep ${pop.bold}`}
+                  >
+                    bold + ink-deep
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="max-w-md text-sm text-muted-foreground">
+              SURFACE tints big fills (theme-aware); BOLD stays electric in both
+              themes and always pairs with the fixed ink-deep text.
+            </p>
           </Section>
 
           <Section title="Typography — four faces, four jobs">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Archivo_Black,
   Bricolage_Grotesque,
@@ -54,6 +54,14 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ["/og.png"],
   },
+};
+
+// Browser chrome matches the canvas in both themes (Dark Mode v2).
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFDF5" },
+    { media: "(prefers-color-scheme: dark)", color: "#110D06" },
+  ],
 };
 
 // Applies the stored (or system) theme before first paint — no flash.

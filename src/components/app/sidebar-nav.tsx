@@ -35,7 +35,7 @@ export function SidebarNav() {
               "flex items-center gap-2.5 rounded-full px-3 py-1.5 text-sm transition-colors",
               // Active nav gets the marker treatment (DESIGN.md v3).
               active
-                ? "border-2 bg-pop-yellow font-semibold text-foreground"
+                ? "border-2 bg-pop-yellow-bold font-semibold text-ink-deep"
                 : "text-muted-foreground hover:bg-accent hover:text-foreground",
             )}
           >

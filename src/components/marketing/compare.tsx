@@ -84,7 +84,7 @@ export function Compare() {
               ))}
             </ul>
           </div>
-          <div className="pop-in rounded-md border-[3px] bg-pop-yellow p-7 shadow-hard [--chip-hover:var(--pop-sky)] lg:-translate-y-3">
+          <div className="pop-in rounded-md border-[3px] bg-pop-yellow p-7 shadow-hard [--chip-hover:var(--pop-sky-bold)] lg:-translate-y-3">
             <a
               href={siteConfig.pro}
               target="_blank"

@@ -9,6 +9,7 @@ export default function NotFound() {
         alt="Gold coin mascot shrugging beside a question mark"
         width={140}
         height={140}
+        className="illo"
       />
       <p className="eyebrow">Entry not found</p>
       <h1 className="text-display">404</h1>

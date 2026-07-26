@@ -13,7 +13,7 @@ import { CopyInstall } from "./copy-install";
 // canvas-colored title shadow, illustration cluster right.
 export function Hero() {
   return (
-    <header className="bg-pop-yellow [--chip-hover:var(--pop-sky)] [--marker-color:var(--canvas)] [--title-shadow:var(--canvas)]">
+    <header className="bg-pop-yellow [--chip-hover:var(--pop-sky-bold)] [--marker-color:var(--canvas)] [--marker-ink:var(--ink)] [--title-shadow:var(--canvas)] dark:[--title-shadow:var(--pop-yellow-bold)]">
       {/* v4.5: left column widened so the full clone command fits on
           one line at desktop — no inner scrollbar. */}
       <div className="mx-auto grid w-full max-w-[1160px] items-center gap-12 px-6 pt-16 pb-14 lg:grid-cols-[1.25fr_0.75fr]">
@@ -91,7 +91,7 @@ export function Hero() {
             width={520}
             height={520}
             priority
-            className="float-idle mx-auto h-auto w-full max-w-[520px]"
+            className="float-idle illo mx-auto h-auto w-full max-w-[520px]"
           />
         </div>
       </div>

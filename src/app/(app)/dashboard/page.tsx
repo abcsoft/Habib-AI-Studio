@@ -77,7 +77,7 @@ export default async function DashboardPage() {
             alt="Gold coin mascot with sunglasses pushed up, waving hello"
             width={96}
             height={96}
-            className="size-24 shrink-0"
+            className="illo size-24 shrink-0"
           />
           <div>
             <p className="eyebrow">First steps</p>

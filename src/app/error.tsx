@@ -26,6 +26,7 @@ export default function ErrorPage({
         alt="Gold coin mascot shrugging beside a question mark"
         width={140}
         height={140}
+        className="illo"
       />
       <p className="eyebrow">Unexpected entry</p>
       <h1 className="text-3xl">Something went wrong.</h1>

@@ -36,7 +36,7 @@ export function PricingSection() {
             alt="A stack of gold coins with one coin spinning off the top"
             width={180}
             height={180}
-            className="hidden shrink-0 sm:block"
+            className="illo hidden shrink-0 sm:block"
           />
         </div>
         <div className="border-t-2 border-rule">

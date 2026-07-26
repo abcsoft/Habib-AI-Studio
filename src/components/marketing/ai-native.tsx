@@ -49,7 +49,7 @@ export function AiNative() {
   return (
     <section
       id="ai-native"
-      className="scroll-mt-16 border-t-[3px] bg-pop-sky [--title-shadow:var(--canvas)]"
+      className="scroll-mt-16 border-t-[3px] bg-pop-sky [--title-shadow:var(--canvas)] dark:[--title-shadow:var(--pop-sky-bold)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
         <div className="pop-in mb-11">
@@ -82,7 +82,7 @@ export function AiNative() {
               >
                 <IconChip
                   icon={item.icon}
-                  className="transition-colors group-hover:bg-pop-yellow"
+                  className="transition-colors group-hover:bg-pop-yellow-bold group-hover:text-ink-deep"
                 />
                 {item.text}
               </li>

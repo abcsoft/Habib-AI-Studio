@@ -71,7 +71,7 @@ export function HowItWorks() {
                   alt={step.alt}
                   width={440}
                   height={440}
-                  className="mx-auto h-auto w-full max-w-[180px]"
+                  className="illo mx-auto h-auto w-full max-w-[180px]"
                 />
                 <span className="chip-mono mt-3">{step.index}</span>
                 <h3 className="mt-3 font-heading text-2xl font-extrabold uppercase">

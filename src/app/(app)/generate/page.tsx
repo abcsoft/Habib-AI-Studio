@@ -56,7 +56,7 @@ export default async function GeneratePage() {
               alt="Gold coin mascot painting at a tiny easel"
               width={96}
               height={96}
-              className="size-24 shrink-0"
+              className="illo size-24 shrink-0"
             />
             <div>
               <p className="eyebrow">First entry pending</p>

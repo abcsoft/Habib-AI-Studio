@@ -40,7 +40,7 @@ function Half({ first }: { first?: boolean }) {
 
 export function Marquee() {
   return (
-    <div className="overflow-hidden bg-foreground py-3 font-display text-2xl font-normal tracking-wide text-background uppercase">
+    <div className="overflow-hidden bg-foreground py-3 font-display text-2xl font-normal tracking-wide text-background uppercase dark:bg-pop-yellow-bold dark:text-ink-deep">
       <div className="marquee flex w-max">
         <Half first />
         <Half />

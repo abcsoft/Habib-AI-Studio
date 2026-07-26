@@ -126,6 +126,38 @@ editing it first.
 12. **No new UI/animation libraries.** Fonts via `next/font/google`
     only.
 
+## Dark mode — "the same poster at night" (Dark Mode v2)
+
+Dark mode is NOT the light theme with the lights off. It is the same
+loud poster printed on dark paper. Three rules:
+
+1. **Saturation survives; large luminous areas do not.** Big surfaces go
+   deep and rich (tinted charcoal, never gray, never pure black); small
+   elements stay electric.
+2. **Every pop color has TWO roles.** SURFACE (`--pop-*`) is
+   theme-aware: bright in light, deep tinted charcoal in dark — used for
+   section blocking and large fills. BOLD (`--pop-*-bold`) is
+   theme-invariant bright saturated fill — buttons, chips, stickers,
+   icon plates, the marquee, headline highlights, focus rings, charts —
+   and is ALWAYS paired with the fixed `--ink-deep` text token, in both
+   themes (this also fixes the latent inversion bug where flipped
+   `--ink` landed light text on bright fills).
+3. **Hard shadows stay hard.** Shadow tokens keep `var(--ink)`, so on
+   dark neutral surfaces the offset shadow is CREAM — the night
+   signature. Transparent illustrations get a flat cream
+   `drop-shadow` (`.illo`, zero blur) so silhouettes never melt. No
+   blur, ever.
+
+Dark canvas is warm espresso-charcoal `oklch(0.16 0.015 80)`; ink is
+warm cream `oklch(0.955 0.012 95)` (no glare). Surface tints are
+per-hue mixes of canvas toward the bold pop — sky/pink take the most
+(deep navy / deep berry, 16%), yellow the least (8% — dark yellow turns
+olive; bright yellow ACCENTS carry that section instead). The big ink
+blocks (closing band, footer) become elevated `--paper-2` panels via
+the `--band-*` tokens — a full-width cream band would be glare. Focus
+rings and `::selection` go yellow-bold; loud-section title shadows use
+the section's bold pop at night.
+
 ## Tokens
 
 Hard-code ONLY these; derive the rest with `color-mix()`.
