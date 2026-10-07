@@ -4,11 +4,13 @@ import {
   check,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   text,
   timestamp,
   uuid,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 // Schema changes go through /db-migration: edit this file, `pnpm
@@ -201,5 +203,126 @@ export const generations = pgTable(
       t.userId,
       t.createdAt.desc(),
     ),
+  ],
+);
+
+export const brandKits = pgTable(
+  "brand_kits",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    industry: text("industry").notNull(),
+    audience: text("audience").notNull(),
+    voice: text("voice").notNull(),
+    colors: text("colors").notNull(),
+    ...timestamps,
+  },
+  (t) => [index("brand_kits_user_id_idx").on(t.userId)],
+);
+
+export const projects = pgTable(
+  "projects",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    ...timestamps,
+  },
+  (t) => [index("projects_user_id_idx").on(t.userId)],
+);
+
+export const campaigns = pgTable(
+  "campaigns",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    projectId: uuid("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    brandKitId: uuid("brand_kit_id")
+      .notNull()
+      .references(() => brandKits.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    product: text("product").notNull(),
+    goal: text("goal").notNull(),
+    channel: text("channel").notNull(),
+    status: text("status").notNull().default("draft"),
+    ...timestamps,
+  },
+  (t) => [
+    index("campaigns_user_id_idx").on(t.userId),
+    index("campaigns_project_id_idx").on(t.projectId),
+    index("campaigns_brand_kit_id_idx").on(t.brandKitId),
+  ],
+);
+
+export const studioRuns = pgTable(
+  "studio_runs",
+  {
+    id: uuid("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    campaignId: uuid("campaign_id")
+      .notNull()
+      .references(() => campaigns.id, { onDelete: "cascade" }),
+    requestId: uuid("request_id").notNull(),
+    kind: text("kind").notNull(),
+    model: text("model").notNull(),
+    status: text("status").notNull().default("pending"),
+    prompt: text("prompt").notNull(),
+    promptVersion: text("prompt_version")
+      .notNull()
+      .default("habib-campaign-v1"),
+    output:
+      jsonb("output").$type<import("@/lib/studio/types").CampaignPackage>(),
+    inputTokens: integer("input_tokens").notNull().default(0),
+    outputTokens: integer("output_tokens").notNull().default(0),
+    cacheReadTokens: integer("cache_read_tokens").notNull().default(0),
+    cacheCreationTokens: integer("cache_creation_tokens").notNull().default(0),
+    credits: integer("credits").notNull(),
+    providerRequestId: text("provider_request_id"),
+    durationMs: integer("duration_ms"),
+    errorCode: text("error_code"),
+    refunded: boolean("refunded").notNull().default(false),
+    ...timestamps,
+  },
+  (t) => [
+    index("studio_runs_user_id_idx").on(t.userId),
+    index("studio_runs_campaign_id_idx").on(t.campaignId),
+    uniqueIndex("studio_runs_user_request_unique").on(t.userId, t.requestId),
+  ],
+);
+
+export const creativeAssets = pgTable(
+  "creative_assets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    campaignId: uuid("campaign_id")
+      .notNull()
+      .references(() => campaigns.id, { onDelete: "cascade" }),
+    runId: uuid("run_id")
+      .notNull()
+      .references(() => studioRuns.id, { onDelete: "cascade" }),
+    imageUrl: text("image_url").notNull(),
+    prompt: text("prompt").notNull(),
+    model: text("model").notNull(),
+    ...timestamps,
+  },
+  (t) => [
+    index("creative_assets_user_id_idx").on(t.userId),
+    index("creative_assets_campaign_id_idx").on(t.campaignId),
+    index("creative_assets_run_id_idx").on(t.runId),
   ],
 );

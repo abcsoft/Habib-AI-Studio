@@ -29,7 +29,7 @@ async function decodeImageUrl(
     }
     return { bytes: Buffer.from(match[2], "base64"), mediaType: match[1] };
   }
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
   if (!response.ok) {
     throw new Error(
       `storage: fetching provider image failed (${response.status})`,

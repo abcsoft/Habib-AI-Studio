@@ -16,13 +16,13 @@ import {
 // v3 playful palette in email-safe hex: warm cream, near-black ink, yellow
 // action button with ink text, credit green for amounts, 2px ink borders.
 export const emailTheme = {
-  paper: "#f7f2df",
-  paper2: "#ece5cf",
+  paper: "#faf9f6",
+  paper2: "#eeeaf5",
   ink: "#26241d",
   muted: "#6e6a5c",
   hairline: "#cfc8b2",
-  accent: "#f3d84a",
-  accentInk: "#26241d",
+  accent: "#6d4aff",
+  accentInk: "#ffffff",
   credit: "#27a562",
   mono: "'Courier New', Courier, monospace",
   sans: "Helvetica, Arial, sans-serif",
@@ -66,8 +66,8 @@ export function EmailLayout({
                 margin: "18px 0 14px",
               }}
             >
-              <span style={{ color: emailTheme.accent }}>▮</span>{" "}
-              ai-saas-starter
+              <span style={{ color: emailTheme.accent }}>▮</span> Habib AI
+              Studio
             </Text>
           </Section>
           {children}
@@ -86,7 +86,7 @@ export function EmailLayout({
               margin: 0,
             }}
           >
-            ai-saas-starter · open source · MIT
+            Habib AI Studio · Your next creative direction
           </Text>
         </Container>
       </Body>

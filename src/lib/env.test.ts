@@ -13,6 +13,16 @@ const validEnv = {
 };
 
 describe("parseEnv", () => {
+  const productionEnv = {
+    ...validEnv,
+    ANTHROPIC_API_KEY: "test_anthropic",
+    AI_GATEWAY_API_KEY: "test_gateway",
+    BLOB_READ_WRITE_TOKEN: "test_blob",
+    RESEND_API_KEY: "test_resend",
+    UPSTASH_REDIS_REST_URL: "https://example.upstash.io",
+    UPSTASH_REDIS_REST_TOKEN: "test_redis",
+    CRON_SECRET: "test-only-reconciliation-secret-32chars",
+  };
   it("accepts a minimal valid env and applies defaults", () => {
     const env = parseEnv(validEnv);
     expect(env.BETTER_AUTH_URL).toBe("http://localhost:3000");
@@ -75,9 +85,9 @@ describe("parseEnv", () => {
   });
 
   it("accepts a fully configured production env", () => {
-    expect(parseEnv({ ...validEnv, NODE_ENV: "production" }).NODE_ENV).toBe(
-      "production",
-    );
+    expect(
+      parseEnv({ ...productionEnv, NODE_ENV: "production" }).NODE_ENV,
+    ).toBe("production");
   });
 
   it("refuses AI_MOCK in production — placeholders must never charge credits", () => {
@@ -85,7 +95,7 @@ describe("parseEnv", () => {
       parseEnv({ ...validEnv, NODE_ENV: "production", AI_MOCK: "true" }),
     ).toThrowError(/AI_MOCK/);
     expect(
-      parseEnv({ ...validEnv, NODE_ENV: "production", AI_MOCK: "false" })
+      parseEnv({ ...productionEnv, NODE_ENV: "production", AI_MOCK: "false" })
         .AI_MOCK,
     ).toBe(false);
   });

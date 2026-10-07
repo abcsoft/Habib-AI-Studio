@@ -15,10 +15,10 @@ test("billing renders plan cards from the plans config", async ({ page }) => {
 
   // Sibling upgrade actions, identical style; top-up shares the anatomy.
   await expect(
-    page.getByRole("button", { name: "Upgrade to Pro" }),
+    page.getByRole("button", { name: "Upgrade to Creator" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Upgrade to Ultra" }),
+    page.getByRole("button", { name: "Upgrade to Studio" }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Buy top-up" })).toBeVisible();
 });

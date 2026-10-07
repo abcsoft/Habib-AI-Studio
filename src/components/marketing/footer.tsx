@@ -1,101 +1,44 @@
-import Image from "next/image";
 import Link from "next/link";
-
-import { siteConfig } from "@/config/site";
-
-// v4.1 footer — a destination, not an afterthought: full-width ink block,
-// giant Archivo wordmark with the yellow offset shadow, chunky mono link
-// chips with the nav hover physics, the mascot in the corner. Light-on-
-// ink text stays >=4.5:1 (canvas/ink 17.8, on-ink-muted 10.3).
-const columns = [
-  {
-    title: "Product",
-    links: [
-      { label: "sign in", href: "/login" },
-      { label: "sign up", href: "/signup" },
-      { label: "pricing", href: "/pricing" },
-    ],
-  },
-  {
-    title: "Repo",
-    links: [
-      { label: "github", href: siteConfig.github, external: true },
-      { label: "pro version", href: siteConfig.pro, external: true },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "privacy", href: "/privacy" },
-      { label: "terms", href: "/terms" },
-    ],
-  },
-] as const;
-
+import { ArrowUpRight } from "lucide-react";
+import { BrandMark } from "@/components/studio/brand-mark";
 export function MarketingFooter() {
   return (
-    <footer className="bg-(--band-bg) text-(--band-fg) [--muted-ink:var(--band-muted)] [--title-shadow:var(--pop-yellow-bold)]">
-      <div className="mx-auto w-full max-w-[1160px] px-6 pt-16 pb-10">
-        <div className="flex flex-wrap items-start justify-between gap-x-16 gap-y-12">
-          <div className="max-w-full">
-            <p className="font-display text-[clamp(3rem,1.6rem+3.5vw,6rem)] leading-none tracking-tight uppercase [text-shadow:0.05em_0.05em_0_var(--title-shadow)]">
-              ai-saas-
+    <footer className="marketing-footer">
+      <div className="site-container">
+        <div className="footer-top">
+          <div>
+            <BrandMark />
+            <p>
+              A little inspiration. A lot of possibility.
               <br />
-              starter
-            </p>
-            <p className="mt-6 font-mono text-xs">
-              Built by{" "}
-              <a
-                href="https://nikandr.com"
-                target="_blank"
-                rel="noreferrer"
-                className="marker-hover underline underline-offset-4"
-              >
-                Nikandr Surkov
-              </a>
+              Your next great campaign starts here.
             </p>
           </div>
-          <div className="flex flex-wrap gap-x-14 gap-y-10">
-            {columns.map((column) => (
-              <nav key={column.title} aria-label={column.title}>
-                <p className="eyebrow mb-3.5">{column.title}</p>
-                <ul className="flex flex-col items-start gap-3">
-                  {column.links.map((link) =>
-                    "external" in link && link.external ? (
-                      <li key={link.label}>
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="footer-chip"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ) : (
-                      <li key={link.label}>
-                        <Link href={link.href} className="footer-chip">
-                          {link.label}
-                        </Link>
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </nav>
-            ))}
+          <div className="footer-links">
+            <div>
+              <span>THE STUDIO</span>
+              <Link href="/demo">Explore demo</Link>
+              <Link href="/pricing">Pricing</Link>
+              <Link href="/signup">
+                Start creating <ArrowUpRight size={12} />
+              </Link>
+            </div>
+            <div>
+              <span>LET’S CONNECT</span>
+              <Link href="/about">About us</Link>
+              <Link href="/contact">Contact</Link>
+              <Link href="/ai-disclosure">AI disclosure</Link>
+            </div>
+            <div>
+              <span>THE DETAILS</span>
+              <Link href="/privacy">Privacy policy</Link>
+              <Link href="/terms">Terms of service</Link>
+            </div>
           </div>
         </div>
-        <div className="mt-14 flex flex-wrap items-end justify-between gap-6">
-          <p className="font-mono text-[10.5px] tracking-wider text-muted-foreground">
-            © 2026 {siteConfig.name} · MIT license · ledger-true since day one
-          </p>
-          <Image
-            src="/illustrations/mascot-hello.png"
-            alt="Gold coin mascot with sunglasses pushed up, waving goodbye"
-            width={72}
-            height={72}
-            className="illo size-18"
-          />
+        <div className="footer-bottom">
+          <span>© 2026 Habib AI Studio. Built for your next big idea.</span>
+          <span>Thought with Claude. Rendered with an image model.</span>
         </div>
       </div>
     </footer>

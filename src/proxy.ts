@@ -21,5 +21,11 @@ export const config = {
     "/generate/:path*",
     "/billing/:path*",
     "/settings/:path*",
+    "/projects/:path*",
+    "/campaigns/:path*",
+    "/brands/:path*",
+    "/creatives/:path*",
+    "/history/:path*",
+    "/usage/:path*",
   ],
 };

@@ -16,6 +16,10 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     ".generated/**",
     "drizzle/**",
+    ".local-postgres/**",
+    ".local-tools/**",
+    "test-results/**",
+    "playwright-report/**",
   ]),
 ]);
 

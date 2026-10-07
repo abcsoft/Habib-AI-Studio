@@ -15,7 +15,8 @@ test("signup → sign out → login → dashboard shows 10 welcome credits", asy
   await page.getByRole("button", { name: "Create account" }).click();
   await page.waitForURL("**/dashboard");
   await expect(creditBalance(page)).toHaveText("10");
-  // The welcome grant shows up in the dashboard ledger table.
+  // The welcome grant remains visible in the billing ledger.
+  await page.goto("/billing");
   await expect(page.getByText("subscription_grant")).toBeVisible();
 
   // Sign out via the user menu.

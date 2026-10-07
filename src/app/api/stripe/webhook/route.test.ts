@@ -86,6 +86,7 @@ function checkoutCompletedEvent(
         id: "cs_test_1",
         object: "checkout.session",
         mode,
+        payment_status: "paid",
         customer: "cus_test_1",
         metadata,
       },
@@ -226,6 +227,23 @@ describe("credit side-effects", () => {
   it("subscription-mode checkout grants nothing (invoice.paid will)", async () => {
     await POST(signedRequest(checkoutCompletedEvent("subscription")));
     expect(grantCredits).not.toHaveBeenCalled();
+  });
+  it("an unpaid completed checkout does not grant credits before settlement", async () => {
+    const event = checkoutCompletedEvent("payment");
+    event.data.object.payment_status = "unpaid";
+    await POST(signedRequest(event));
+    expect(grantCredits).not.toHaveBeenCalled();
+  });
+  it("delayed payment success grants the same idempotently keyed top-up", async () => {
+    const event = checkoutCompletedEvent("payment");
+    event.type = "checkout.session.async_payment_succeeded";
+    await POST(signedRequest(event));
+    expect(grantCredits).toHaveBeenCalledWith(
+      expect.objectContaining({
+        amount: 100,
+        idempotencyKey: "topup_cs_test_1",
+      }),
+    );
   });
 
   it("foreign payment checkouts (no top-up metadata) grant nothing", async () => {

@@ -29,6 +29,20 @@
       "when": 1783959501657,
       "tag": "0003_flat_zombie",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791392868653,
+      "tag": "0004_rapid_lizard",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791397873345,
+      "tag": "0005_cute_deathbird",
+      "breakpoints": true
     }
   ]
 }

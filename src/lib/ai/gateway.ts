@@ -22,6 +22,8 @@ export const gatewayProvider: ImageProvider = {
       model: env.AI_IMAGE_MODEL,
       prompt,
       size: `${SIZE}x${SIZE}`,
+      abortSignal: AbortSignal.timeout(90000),
+      maxRetries: 1,
     });
     return {
       url: `data:${result.image.mediaType};base64,${result.image.base64}`,

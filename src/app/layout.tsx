@@ -1,42 +1,29 @@
 import type { Metadata, Viewport } from "next";
 import {
-  Archivo_Black,
   Bricolage_Grotesque,
   Instrument_Sans,
   Martian_Mono,
 } from "next/font/google";
 import "./globals.css";
-
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
-
-const instrumentSans = Instrument_Sans({
+const instrument = Instrument_Sans({
   variable: "--font-instrument-sans",
   subsets: ["latin"],
 });
-
-const martianMono = Martian_Mono({
+const mono = Martian_Mono({
   variable: "--font-martian-mono",
   subsets: ["latin"],
 });
-
-const bricolage = Bricolage_Grotesque({
+const display = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
 });
-
-// DESIGN.md v4: the display face — hero H1 and section titles ONLY.
-const archivo = Archivo_Black({
-  variable: "--font-archivo",
-  weight: "400",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — auth, Stripe, and a credits ledger that survives retries`,
-    template: `%s — ${siteConfig.name}`,
+    default: "Habib AI Studio — Your AI creative & advertising studio",
+    template: "%s — Habib AI Studio",
   },
   description: siteConfig.description,
   openGraph: {
@@ -45,43 +32,33 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [
-      { url: "/og.png", width: 1200, height: 630, alt: siteConfig.name },
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Habib AI Studio — Your next creative direction",
+      },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
   },
 };
-
-// Browser chrome matches the canvas in both themes (Dark Mode v2).
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFDF5" },
-    { media: "(prefers-color-scheme: dark)", color: "#110D06" },
-  ],
-};
-
-// Applies the stored (or system) theme before first paint — no flash.
-// Class strategy: `.dark` on <html>, persisted in localStorage("theme").
-const themeScript = `try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d)}catch(e){}`;
-
+export const viewport: Viewport = { themeColor: "#faf9f6" };
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html
       lang="en"
-      suppressHydrationWarning
-      className={`${instrumentSans.variable} ${martianMono.variable} ${bricolage.variable} ${archivo.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${instrument.variable} ${mono.variable} ${display.variable} h-full antialiased`}
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className="flex min-h-full flex-col">
         {children}
         <Toaster />

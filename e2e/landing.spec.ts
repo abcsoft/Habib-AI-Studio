@@ -1,49 +1,66 @@
 import { expect, test } from "@playwright/test";
-
-test("landing renders the ledger sections with signed-out auth CTAs", async ({
+test("branded landing renders complete product sections and public creative assets", async ({
   page,
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "A complete AI SaaS. Free.",
+    "creative direction.",
   );
-  // Signed-out nav: Sign in + Get started; hero CTA goes to signup.
   await expect(
-    page.getByRole("banner").getByRole("link", { name: "Get started" }),
+    page.getByRole("link", { name: "Start creating for free" }),
   ).toHaveAttribute("href", "/signup");
+  for (const id of ["features", "pricing", "gallery", "how-it-works"])
+    await expect(page.locator(`#${id}`)).toBeVisible();
+  await expect(page.locator("#pricing")).toContainText(
+    "200 credits every month",
+  );
+  await expect(page.locator("#gallery img")).toHaveCount(4);
+  for (const image of await page.locator("#gallery img").all())
+    await expect
+      .poll(() => image.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
+  await page.getByText("Does Claude generate the images?").click();
   await expect(
-    page.getByRole("banner").getByRole("link", { name: "Sign in" }),
+    page.getByText(/A separate image model renders your visuals/),
   ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Start free — 10 credits" }),
-  ).toHaveAttribute("href", "/signup");
-  await expect(page.locator("#features")).toBeVisible();
-  // Pricing section reads from config/plans.ts.
-  await expect(page.locator("#pricing")).toBeVisible();
-  await expect(page.locator("#pricing")).toContainText("$9/mo");
-  // The clarity block states the product in plain words.
-  await expect(page.locator("#what")).toContainText(
-    "This website is the demo.",
-  );
-  await expect(page.locator("#how")).toContainText("Clone it");
-  // The gallery renders all six generated posters with caption chips.
-  await expect(page.locator("#gallery img")).toHaveCount(6);
-  await expect(page.locator("#gallery")).toContainText("sunset over mountains");
-  await expect(page.locator('details[name="faq"]').first()).toBeVisible();
 });
-
-test("theme toggle flips to dark, renders, and persists across reloads", async ({
+test("studio walkthrough opens, advances, and leads to the demo", async ({
   page,
 }) => {
   await page.goto("/");
-  const html = page.locator("html");
-  await expect(html).not.toHaveClass(/dark/);
-
-  await page.getByRole("button", { name: "Toggle theme" }).click();
-  await expect(html).toHaveClass(/dark/);
-  // Dark theme actually renders the page (not just a class flip).
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-
-  await page.reload();
-  await expect(html).toHaveClass(/dark/);
+  await page
+    .getByRole("button", { name: "Watch the studio walkthrough" })
+    .first()
+    .click();
+  await expect(page.getByRole("dialog")).toContainText("Make it your brand");
+  for (let i = 0; i < 5; i++)
+    await page.getByRole("button", { name: "Next step" }).click();
+  await expect(
+    page.getByRole("link", { name: "Try it yourself" }),
+  ).toHaveAttribute("href", "/demo?view=new");
+});
+test("mobile marketing and demo fit the viewport and have functional navigation", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.goto("/demo");
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  await page
+    .getByRole("navigation", { name: "Studio navigation" })
+    .getByRole("link", { name: "Brand kits" })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Your brand kits" }),
+  ).toBeVisible();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
 });

@@ -59,6 +59,13 @@ jobs:
           STRIPE_PRICE_PRO_MONTHLY: price_ci_pro
           STRIPE_PRICE_ULTRA_MONTHLY: price_ci_ultra
           STRIPE_PRICE_TOPUP_100: price_ci_topup
+          ANTHROPIC_API_KEY: build_only_dummy
+          AI_GATEWAY_API_KEY: build_only_dummy
+          BLOB_READ_WRITE_TOKEN: build_only_dummy
+          RESEND_API_KEY: build_only_dummy
+          UPSTASH_REDIS_REST_URL: https://example.upstash.io
+          UPSTASH_REDIS_REST_TOKEN: build_only_dummy
+          CRON_SECRET: ci-only-maintenance-secret-ci-only-secret
 
       - run: pnpm exec playwright install --with-deps chromium
 

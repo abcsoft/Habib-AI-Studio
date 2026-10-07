@@ -6,7 +6,9 @@ import { defineConfig, devices } from "@playwright/test";
 // boot or hit a real image provider. Do not "fix" this into a prod-build
 // run. (The same note lives in .github/workflows/ci.yml.)
 
-const PORT = 3100;
+const PORT = Number(process.env.E2E_PORT ?? "3100");
+if (!Number.isInteger(PORT) || PORT < 1024 || PORT > 65535)
+  throw new Error("Invalid E2E_PORT");
 
 export const BASE_URL = `http://localhost:${PORT}`;
 

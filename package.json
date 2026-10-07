@@ -1,8 +1,8 @@
 {
-  "name": "ai-saas-starter",
+  "name": "habib-ai-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "Open-source SaaS foundation: auth, Stripe subscriptions, an append-only credits ledger, and AI image generation — built AI-native.",
+  "description": "Habib AI Studio: brand-aware AI campaign strategy, advertising copy, creative briefs and independent image rendering.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikandr-surkov/ai-saas-starter.git"

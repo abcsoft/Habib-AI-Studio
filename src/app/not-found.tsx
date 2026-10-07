@@ -1,27 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
+import { BrandMark } from "@/components/studio/brand-mark";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-5 px-6 text-center">
-      <Image
-        src="/illustrations/mascot-lost.png"
-        alt="Gold coin mascot shrugging beside a question mark"
-        width={140}
-        height={140}
-        className="illo"
-      />
-      <p className="eyebrow">Entry not found</p>
+      <BrandMark />
+      <p className="eyebrow">Page not found</p>
       <h1 className="text-display">404</h1>
       <p className="max-w-md text-muted-foreground">
-        This page is not in the ledger — the address may have moved or never
-        existed. Your account and credits are unaffected.
+        This page may have moved, or the address may be incorrect. Let&apos;s
+        get your next idea started.
       </p>
-      <Link
-        href="/"
-        className="press inline-flex items-center rounded-md border-2 bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
-      >
-        Back to safety
+      <Link href="/" className="button button-primary">
+        Back to home
       </Link>
     </div>
   );

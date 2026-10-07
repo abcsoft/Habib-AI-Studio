@@ -48,7 +48,7 @@ const schema = z
 
     // ── Email via Resend (optional — emails no-op without it) ─────────────
     RESEND_API_KEY: z.string().optional(),
-    EMAIL_FROM: z.string().default("AI SaaS Starter <onboarding@resend.dev>"),
+    EMAIL_FROM: z.string().default("Habib AI Studio <onboarding@resend.dev>"),
 
     // ── Stripe ────────────────────────────────────────────────────────────
     // Optional in development so a fresh clone boots without a Stripe
@@ -77,6 +77,10 @@ const schema = z
       .regex(/^[\w.-]+\/[\w.:-]+$/, 'expected "provider/model" format')
       .default("openai/gpt-image-1"),
     AI_MOCK: stringBool(),
+    ANTHROPIC_API_KEY: z.string().optional(),
+    ANTHROPIC_MODEL: z.string().min(3).default("claude-sonnet-4-6"),
+    CONTACT_EMAIL: z.email().default("hello@mdhabiburrahman.xyz"),
+    CRON_SECRET: z.string().min(32).optional(),
 
     // ── Rate limiting via Upstash (optional — in-memory fallback) ─────────
     UPSTASH_REDIS_REST_URL: z.url().optional(),
@@ -101,6 +105,23 @@ const schema = z
       }
     }
     if (env.NODE_ENV === "production") {
+      for (const key of [
+        "ANTHROPIC_API_KEY",
+        "AI_GATEWAY_API_KEY",
+        "BLOB_READ_WRITE_TOKEN",
+        "RESEND_API_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "CRON_SECRET",
+      ] as const) {
+        if (!env[key])
+          ctx.addIssue({
+            code: "custom",
+            path: [key],
+            message:
+              "required in production for live generation, durable storage, account verification, distributed limits and refund reconciliation",
+          });
+      }
       for (const key of STRIPE_VARS) {
         if (!env[key]) {
           ctx.addIssue({

@@ -20,6 +20,17 @@ export default function SignupPage() {
         next="/dashboard"
       />
       <SignupForm requiresVerification={features.email} />
+      <p className="text-xs text-muted-foreground">
+        By creating an account, you agree to the{" "}
+        <Link href="/terms" className="link-pop">
+          Terms
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="link-pop">
+          Privacy Policy
+        </Link>
+        .
+      </p>
       <p className="text-sm text-muted-foreground">
         Already registered?{" "}
         <Link href="/login" className="link-pop">

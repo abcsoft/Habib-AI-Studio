@@ -24,23 +24,24 @@ export const WELCOME_CREDITS = 10;
 
 /** Credits spent per image generation (the spend lands in M5). */
 export const GENERATION_COST_CREDITS = 1;
+export const CAMPAIGN_COST_CREDITS = 3;
 
 export const plans: Record<PlanId, Plan> = {
   free: {
     id: "free",
-    name: "Free",
+    name: "Starter",
     priceMonthlyCents: 0,
     monthlyCredits: 0,
     priceEnvKey: null,
     features: [
       `${WELCOME_CREDITS} welcome credits`,
       `${GENERATION_COST_CREDITS} credit per image generation`,
-      "Full source code, MIT",
+      "Campaign strategy, copy and exports",
     ],
   },
   pro: {
     id: "pro",
-    name: "Pro",
+    name: "Creator",
     priceMonthlyCents: 900,
     monthlyCredits: 200,
     priceEnvKey: "STRIPE_PRICE_PRO_MONTHLY",
@@ -52,7 +53,7 @@ export const plans: Record<PlanId, Plan> = {
   },
   ultra: {
     id: "ultra",
-    name: "Ultra",
+    name: "Studio",
     priceMonthlyCents: 2900,
     monthlyCredits: 1000,
     priceEnvKey: "STRIPE_PRICE_ULTRA_MONTHLY",

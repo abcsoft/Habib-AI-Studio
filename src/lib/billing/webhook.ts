@@ -25,8 +25,10 @@ import { syncStripeDataToDb } from "./sync";
 
 const RELEVANT_EVENTS = new Set<Stripe.Event.Type>([
   "checkout.session.completed",
+  "checkout.session.async_payment_succeeded",
   "invoice.paid",
   "customer.subscription.updated",
+  "customer.subscription.created",
   "customer.subscription.deleted",
 ]);
 
@@ -54,6 +56,7 @@ const invoiceSchema = z.object({
 const checkoutSessionSchema = z.object({
   id: z.string(),
   mode: z.string(),
+  payment_status: z.enum(["paid", "unpaid", "no_payment_required"]),
   metadata: z.record(z.string(), z.string()).nullish(),
 });
 
@@ -78,6 +81,7 @@ export async function handleStripeEvent(event: Stripe.Event): Promise<void> {
       await grantSubscriptionCredits(event.data.object, customerId);
       break;
     case "checkout.session.completed":
+    case "checkout.session.async_payment_succeeded":
       await grantTopupCredits(event.data.object, customerId);
       break;
   }
@@ -174,6 +178,9 @@ async function grantTopupCredits(
 
   // Subscription checkouts grant via their invoice.paid event instead.
   if (session.mode !== "payment") return;
+  // Completion can precede payment for delayed methods. Grant only once
+  // Stripe confirms payment; async success uses the same idempotency key.
+  if (session.payment_status !== "paid") return;
 
   if (session.metadata?.kind !== "topup") {
     console.warn(

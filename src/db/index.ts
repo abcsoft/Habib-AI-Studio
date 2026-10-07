@@ -10,7 +10,13 @@ import * as schema from "./schema";
 const globalForDb = globalThis as unknown as { dbPool?: Pool };
 
 const pool =
-  globalForDb.dbPool ?? new Pool({ connectionString: env.DATABASE_URL });
+  globalForDb.dbPool ??
+  new Pool({
+    connectionString: env.DATABASE_URL,
+    max: 10,
+    connectionTimeoutMillis: 10000,
+    query_timeout: 15000,
+  });
 
 if (env.NODE_ENV !== "production") {
   globalForDb.dbPool = pool;
